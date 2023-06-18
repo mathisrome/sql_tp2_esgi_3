@@ -211,16 +211,16 @@ class AppFixtures extends Fixture
         PrestationMedicalFactory::createMany(40, function () use ($cadre) {
             return [
                 'acte_medical' => ActeMedicalFactory::random(),
-                'salaries' => SalarieFactory::randomRange(0, 20, [
+                'salarie' => SalarieFactory::random([
                     'statut' => $cadre
-                ])
+                ]),
             ];
         });
 
         PrestationMedicalFactory::createMany(40, function () use ($non_cadre) {
             return [
                 'acte_medical' => ActeMedicalFactory::random(),
-                'salaries' => SalarieFactory::randomRange(0, 20, [
+                'salarie' => SalarieFactory::random([
                     'statut' => $non_cadre
                 ])
             ];
@@ -229,7 +229,7 @@ class AppFixtures extends Fixture
         PrestationMedicalFactory::createMany(20, function () use ($non_cadre) {
             return [
                 'acte_medical' => ActeMedicalFactory::random(),
-                'retraites' => RetraiteFactory::randomRange(0, 20)
+                'retraite' => RetraiteFactory::random()
             ];
         });
 

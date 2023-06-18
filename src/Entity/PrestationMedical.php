@@ -18,16 +18,15 @@ class PrestationMedical
     #[ORM\ManyToOne(inversedBy: 'prestationMedicals')]
     private ?ActeMedical $acte_medical = null;
 
-    #[ORM\ManyToMany(targetEntity: Retraite::class, mappedBy: 'prestations_medicales')]
-    private Collection $retraites;
+    #[ORM\ManyToOne(inversedBy: 'prestationMedicales')]
+    private ?Retraite $retraite = null;
 
-    #[ORM\ManyToMany(targetEntity: Salarie::class, mappedBy: 'prestations_medicales')]
-    private Collection $salaries;
+    #[ORM\ManyToOne(inversedBy: 'prestationMedicales')]
+    private ?Salarie $salarie = null;
 
     public function __construct()
     {
-        $this->retraites = new ArrayCollection();
-        $this->salaries = new ArrayCollection();
+        $this->prestationMedicales = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -47,56 +46,26 @@ class PrestationMedical
         return $this;
     }
 
-    /**
-     * @return Collection<int, Retraite>
-     */
-    public function getRetraites(): Collection
+    public function getRetraite(): ?Retraite
     {
-        return $this->retraites;
+        return $this->retraite;
     }
 
-    public function addRetraite(Retraite $retraite): static
+    public function setRetraite(?Retraite $retraite): static
     {
-        if (!$this->retraites->contains($retraite)) {
-            $this->retraites->add($retraite);
-            $retraite->addPrestationsMedicale($this);
-        }
+        $this->retraite = $retraite;
 
         return $this;
     }
 
-    public function removeRetraite(Retraite $retraite): static
+    public function getSalarie(): ?Salarie
     {
-        if ($this->retraites->removeElement($retraite)) {
-            $retraite->removePrestationsMedicale($this);
-        }
-
-        return $this;
+        return $this->salarie;
     }
 
-    /**
-     * @return Collection<int, Salarie>
-     */
-    public function getSalaries(): Collection
+    public function setSalarie(?Salarie $salarie): static
     {
-        return $this->salaries;
-    }
-
-    public function addSalary(Salarie $salary): static
-    {
-        if (!$this->salaries->contains($salary)) {
-            $this->salaries->add($salary);
-            $salary->addPrestationsMedicale($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSalary(Salarie $salary): static
-    {
-        if ($this->salaries->removeElement($salary)) {
-            $salary->removePrestationsMedicale($this);
-        }
+        $this->salarie = $salarie;
 
         return $this;
     }

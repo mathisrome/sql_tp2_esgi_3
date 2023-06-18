@@ -18,12 +18,12 @@ class Retraite
     #[ORM\ManyToOne(inversedBy: 'retraites')]
     private ?Adresse $adresse = null;
 
-    #[ORM\ManyToMany(targetEntity: PrestationMedical::class, inversedBy: 'retraites')]
-    private Collection $prestations_medicales;
+    #[ORM\OneToMany(mappedBy: 'retraite', targetEntity: PrestationMedical::class)]
+    private Collection $prestationMedicales;
 
     public function __construct()
     {
-        $this->prestations_medicales = new ArrayCollection();
+        $this->prestationMedicales = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -46,23 +46,29 @@ class Retraite
     /**
      * @return Collection<int, PrestationMedical>
      */
-    public function getPrestationsMedicales(): Collection
+    public function getPrestationMedicales(): Collection
     {
-        return $this->prestations_medicales;
+        return $this->prestationMedicales;
     }
 
-    public function addPrestationsMedicale(PrestationMedical $prestationsMedicale): static
+    public function addPrestationMedicale(PrestationMedical $prestationMedicale): static
     {
-        if (!$this->prestations_medicales->contains($prestationsMedicale)) {
-            $this->prestations_medicales->add($prestationsMedicale);
+        if (!$this->prestationMedicales->contains($prestationMedicale)) {
+            $this->prestationMedicales->add($prestationMedicale);
+            $prestationMedicale->setRetraite($this);
         }
 
         return $this;
     }
 
-    public function removePrestationsMedicale(PrestationMedical $prestationsMedicale): static
+    public function removePrestationMedicale(PrestationMedical $prestationMedicale): static
     {
-        $this->prestations_medicales->removeElement($prestationsMedicale);
+        if ($this->prestationMedicales->removeElement($prestationMedicale)) {
+            // set the owning side to null (unless already changed)
+            if ($prestationMedicale->getRetraite() === $this) {
+                $prestationMedicale->setRetraite(null);
+            }
+        }
 
         return $this;
     }

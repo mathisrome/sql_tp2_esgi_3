@@ -29,13 +29,13 @@ class Salarie
     #[ORM\OneToMany(mappedBy: 'salarie', targetEntity: Salaire::class)]
     private Collection $salaires;
 
-    #[ORM\ManyToMany(targetEntity: PrestationMedical::class, inversedBy: 'salaries')]
-    private Collection $prestations_medicales;
+    #[ORM\OneToMany(mappedBy: 'salarie', targetEntity: PrestationMedical::class)]
+    private Collection $prestationMedicales;
 
     public function __construct()
     {
         $this->salaires = new ArrayCollection();
-        $this->prestations_medicales = new ArrayCollection();
+        $this->prestationMedicales = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -112,23 +112,29 @@ class Salarie
     /**
      * @return Collection<int, PrestationMedical>
      */
-    public function getPrestationsMedicales(): Collection
+    public function getPrestationMedicales(): Collection
     {
-        return $this->prestations_medicales;
+        return $this->prestationMedicales;
     }
 
-    public function addPrestationsMedicale(PrestationMedical $prestationsMedicale): static
+    public function addPrestationMedicale(PrestationMedical $prestationMedicale): static
     {
-        if (!$this->prestations_medicales->contains($prestationsMedicale)) {
-            $this->prestations_medicales->add($prestationsMedicale);
+        if (!$this->prestationMedicales->contains($prestationMedicale)) {
+            $this->prestationMedicales->add($prestationMedicale);
+            $prestationMedicale->setSalarie($this);
         }
 
         return $this;
     }
 
-    public function removePrestationsMedicale(PrestationMedical $prestationsMedicale): static
+    public function removePrestationMedicale(PrestationMedical $prestationMedicale): static
     {
-        $this->prestations_medicales->removeElement($prestationsMedicale);
+        if ($this->prestationMedicales->removeElement($prestationMedicale)) {
+            // set the owning side to null (unless already changed)
+            if ($prestationMedicale->getSalarie() === $this) {
+                $prestationMedicale->setSalarie(null);
+            }
+        }
 
         return $this;
     }
