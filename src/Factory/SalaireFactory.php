@@ -47,7 +47,7 @@ final class SalaireFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            'salaire_brut' => rand(1200, 5000) * 100,
+            'salaire_brut' => rand(1700, 10000) * 100,
         ];
     }
 

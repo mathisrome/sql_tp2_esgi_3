@@ -24,9 +24,6 @@ class Adresse
     #[ORM\ManyToOne(inversedBy: 'adresse')]
     private ?Region $region = null;
 
-    #[ORM\ManyToOne(inversedBy: 'adresses')]
-    private ?QPV $QPV = null;
-
     #[ORM\ManyToOne(inversedBy: 'adresse')]
     private ?Geocalisation $geocalisation = null;
 
@@ -75,18 +72,6 @@ class Adresse
     public function setRegion(?Region $region): static
     {
         $this->region = $region;
-
-        return $this;
-    }
-
-    public function getQPV(): ?QPV
-    {
-        return $this->QPV;
-    }
-
-    public function setQPV(?QPV $QPV): static
-    {
-        $this->QPV = $QPV;
 
         return $this;
     }

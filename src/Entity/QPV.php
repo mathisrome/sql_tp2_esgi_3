@@ -18,15 +18,11 @@ class QPV
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\OneToMany(mappedBy: 'QPV', targetEntity: Adresse::class)]
-    private Collection $adresses;
-
     #[ORM\ManyToMany(targetEntity: Geocalisation::class, mappedBy: 'QPV')]
     private Collection $geocalisations;
 
     public function __construct()
     {
-        $this->adresses = new ArrayCollection();
         $this->geocalisations = new ArrayCollection();
     }
 
@@ -43,36 +39,6 @@ class QPV
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Adresse>
-     */
-    public function getAdresses(): Collection
-    {
-        return $this->adresses;
-    }
-
-    public function addAdress(Adresse $adress): static
-    {
-        if (!$this->adresses->contains($adress)) {
-            $this->adresses->add($adress);
-            $adress->setQPV($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAdress(Adresse $adress): static
-    {
-        if ($this->adresses->removeElement($adress)) {
-            // set the owning side to null (unless already changed)
-            if ($adress->getQPV() === $this) {
-                $adress->setQPV(null);
-            }
-        }
 
         return $this;
     }

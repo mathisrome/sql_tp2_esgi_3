@@ -159,7 +159,6 @@ class AppFixtures extends Fixture
             return [
                 'region' => RegionFactory::createOne(),
                 'geocalisation' => GeocalisationFactory::random(),
-                'qpv' => QPVFactory::random()
             ];
         });
 
