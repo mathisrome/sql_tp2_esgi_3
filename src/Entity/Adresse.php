@@ -21,9 +21,6 @@ class Adresse
     #[ORM\Column(length: 255)]
     private ?string $ville = null;
 
-    #[ORM\OneToMany(mappedBy: 'adresse', targetEntity: Salarie::class)]
-    private Collection $salaries;
-
     #[ORM\ManyToOne(inversedBy: 'adresse')]
     private ?Region $region = null;
 
@@ -33,13 +30,12 @@ class Adresse
     #[ORM\ManyToOne(inversedBy: 'adresse')]
     private ?Geocalisation $geocalisation = null;
 
-    #[ORM\OneToMany(mappedBy: 'adresse', targetEntity: Retraite::class)]
-    private Collection $retraites;
+    #[ORM\OneToMany(mappedBy: 'adresse', targetEntity: Utilisateur::class)]
+    private Collection $utilisateurs;
 
     public function __construct()
     {
-        $this->salaries = new ArrayCollection();
-        $this->retraites = new ArrayCollection();
+        $this->utilisateurs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -67,36 +63,6 @@ class Adresse
     public function setVille(string $ville): static
     {
         $this->ville = $ville;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Salarie>
-     */
-    public function getSalaries(): Collection
-    {
-        return $this->salaries;
-    }
-
-    public function addSalary(Salarie $salary): static
-    {
-        if (!$this->salaries->contains($salary)) {
-            $this->salaries->add($salary);
-            $salary->setAdresse($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSalary(Salarie $salary): static
-    {
-        if ($this->salaries->removeElement($salary)) {
-            // set the owning side to null (unless already changed)
-            if ($salary->getAdresse() === $this) {
-                $salary->setAdresse(null);
-            }
-        }
 
         return $this;
     }
@@ -138,29 +104,29 @@ class Adresse
     }
 
     /**
-     * @return Collection<int, Retraite>
+     * @return Collection<int, Utilisateur>
      */
-    public function getRetraites(): Collection
+    public function getUtilisateurs(): Collection
     {
-        return $this->retraites;
+        return $this->utilisateurs;
     }
 
-    public function addRetraite(Retraite $retraite): static
+    public function addUtilisateur(Utilisateur $utilisateur): static
     {
-        if (!$this->retraites->contains($retraite)) {
-            $this->retraites->add($retraite);
-            $retraite->setAdresse($this);
+        if (!$this->utilisateurs->contains($utilisateur)) {
+            $this->utilisateurs->add($utilisateur);
+            $utilisateur->setAdresse($this);
         }
 
         return $this;
     }
 
-    public function removeRetraite(Retraite $retraite): static
+    public function removeUtilisateur(Utilisateur $utilisateur): static
     {
-        if ($this->retraites->removeElement($retraite)) {
+        if ($this->utilisateurs->removeElement($utilisateur)) {
             // set the owning side to null (unless already changed)
-            if ($retraite->getAdresse() === $this) {
-                $retraite->setAdresse(null);
+            if ($utilisateur->getAdresse() === $this) {
+                $utilisateur->setAdresse(null);
             }
         }
 

@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\PrestationMedical;
+use App\Entity\PrestationMedicale;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<PrestationMedical>
  *
- * @method PrestationMedical|null find($id, $lockMode = null, $lockVersion = null)
- * @method PrestationMedical|null findOneBy(array $criteria, array $orderBy = null)
- * @method PrestationMedical[]    findAll()
- * @method PrestationMedical[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method PrestationMedicale|null find($id, $lockMode = null, $lockVersion = null)
+ * @method PrestationMedicale|null findOneBy(array $criteria, array $orderBy = null)
+ * @method PrestationMedicale[]    findAll()
+ * @method PrestationMedicale[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PrestationMedicalRepository extends ServiceEntityRepository
+class PrestationMedicaleRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, PrestationMedical::class);
+        parent::__construct($registry, PrestationMedicale::class);
     }
 
-    public function save(PrestationMedical $entity, bool $flush = false): void
+    public function save(PrestationMedicale $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class PrestationMedicalRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(PrestationMedical $entity, bool $flush = false): void
+    public function remove(PrestationMedicale $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 

@@ -27,7 +27,7 @@ class ActeMedical
     #[ORM\ManyToOne(inversedBy: 'acteMedicals')]
     private ?TypeActeurMedical $type_acteur_medical = null;
 
-    #[ORM\OneToMany(mappedBy: 'acte_medical', targetEntity: PrestationMedical::class)]
+    #[ORM\OneToMany(mappedBy: 'acte_medical', targetEntity: PrestationMedicale::class)]
     private Collection $prestationMedicals;
 
     public function __construct()
@@ -89,14 +89,14 @@ class ActeMedical
     }
 
     /**
-     * @return Collection<int, PrestationMedical>
+     * @return Collection<int, PrestationMedicale>
      */
     public function getPrestationMedicals(): Collection
     {
         return $this->prestationMedicals;
     }
 
-    public function addPrestationMedical(PrestationMedical $prestationMedical): static
+    public function addPrestationMedical(PrestationMedicale $prestationMedical): static
     {
         if (!$this->prestationMedicals->contains($prestationMedical)) {
             $this->prestationMedicals->add($prestationMedical);
@@ -106,7 +106,7 @@ class ActeMedical
         return $this;
     }
 
-    public function removePrestationMedical(PrestationMedical $prestationMedical): static
+    public function removePrestationMedical(PrestationMedicale $prestationMedical): static
     {
         if ($this->prestationMedicals->removeElement($prestationMedical)) {
             // set the owning side to null (unless already changed)

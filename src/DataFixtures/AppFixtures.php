@@ -7,7 +7,7 @@ use App\Factory\ActeMedicalFactory;
 use App\Factory\AdresseFactory;
 use App\Factory\EntrepriseFactory;
 use App\Factory\GeocalisationFactory;
-use App\Factory\PrestationMedicalFactory;
+use App\Factory\PrestationMedicaleFactory;
 use App\Factory\QPVFactory;
 use App\Factory\RegionFactory;
 use App\Factory\RetraiteFactory;
@@ -208,28 +208,28 @@ class AppFixtures extends Fixture
             ];
         });
 
-        PrestationMedicalFactory::createMany(40, function () use ($cadre) {
+        PrestationMedicaleFactory::createMany(40, function () use ($cadre) {
             return [
                 'acte_medical' => ActeMedicalFactory::random(),
-                'salarie' => SalarieFactory::random([
+                'utilisateur' => SalarieFactory::random([
                     'statut' => $cadre
                 ]),
             ];
         });
 
-        PrestationMedicalFactory::createMany(40, function () use ($non_cadre) {
+        PrestationMedicaleFactory::createMany(40, function () use ($non_cadre) {
             return [
                 'acte_medical' => ActeMedicalFactory::random(),
-                'salarie' => SalarieFactory::random([
+                'utilisateur' => SalarieFactory::random([
                     'statut' => $non_cadre
                 ])
             ];
         });
 
-        PrestationMedicalFactory::createMany(20, function () use ($non_cadre) {
+        PrestationMedicaleFactory::createMany(20, function () use ($non_cadre) {
             return [
                 'acte_medical' => ActeMedicalFactory::random(),
-                'retraite' => RetraiteFactory::random()
+                'utilisateur' => RetraiteFactory::random()
             ];
         });
 
