@@ -24,13 +24,9 @@ class Geocalisation
     #[ORM\OneToMany(mappedBy: 'geocalisation', targetEntity: Adresse::class)]
     private Collection $adresse;
 
-    #[ORM\ManyToMany(targetEntity: QPV::class, inversedBy: 'geocalisations')]
-    private Collection $QPV;
-
     public function __construct()
     {
         $this->adresse = new ArrayCollection();
-        $this->QPV = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -88,30 +84,6 @@ class Geocalisation
                 $adresse->setGeocalisation(null);
             }
         }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, QPV>
-     */
-    public function getQPV(): Collection
-    {
-        return $this->QPV;
-    }
-
-    public function addQPV(QPV $qPV): static
-    {
-        if (!$this->QPV->contains($qPV)) {
-            $this->QPV->add($qPV);
-        }
-
-        return $this;
-    }
-
-    public function removeQPV(QPV $qPV): static
-    {
-        $this->QPV->removeElement($qPV);
 
         return $this;
     }
