@@ -24,14 +24,17 @@ class Adresse
     #[ORM\ManyToOne(inversedBy: 'adresse')]
     private ?Region $region = null;
 
-    #[ORM\ManyToOne(inversedBy: 'adresse')]
-    private ?Geocalisation $geocalisation = null;
-
     #[ORM\OneToMany(mappedBy: 'adresse', targetEntity: Utilisateur::class)]
     private Collection $utilisateurs;
 
     #[ORM\ManyToOne(inversedBy: 'adresses')]
     private ?QPV $QPV = null;
+
+    #[ORM\Column]
+    private ?float $latitude = null;
+
+    #[ORM\Column]
+    private ?float $longitude = null;
 
     public function __construct()
     {
@@ -79,18 +82,6 @@ class Adresse
         return $this;
     }
 
-    public function getGeocalisation(): ?Geocalisation
-    {
-        return $this->geocalisation;
-    }
-
-    public function setGeocalisation(?Geocalisation $geocalisation): static
-    {
-        $this->geocalisation = $geocalisation;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Utilisateur>
      */
@@ -129,6 +120,30 @@ class Adresse
     public function setQPV(?QPV $QPV): static
     {
         $this->QPV = $QPV;
+
+        return $this;
+    }
+
+    public function getLatitude(): ?float
+    {
+        return $this->latitude;
+    }
+
+    public function setLatitude(float $latitude): static
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    public function getLongitude(): ?float
+    {
+        return $this->longitude;
+    }
+
+    public function setLongitude(float $longitude): static
+    {
+        $this->longitude = $longitude;
 
         return $this;
     }

@@ -49,6 +49,8 @@ final class AdresseFactory extends ModelFactory
         return [
             'rue' => self::faker()->streetAddress,
             'ville' => self::faker()->city,
+            'latitude' => self::faker()->latitude,
+            'longitude' => self::faker()->longitude
         ];
     }
 

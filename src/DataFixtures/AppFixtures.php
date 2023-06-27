@@ -6,7 +6,6 @@ use App\Entity\Entreprise;
 use App\Factory\ActeMedicalFactory;
 use App\Factory\AdresseFactory;
 use App\Factory\EntrepriseFactory;
-use App\Factory\GeocalisationFactory;
 use App\Factory\PrestationMedicaleFactory;
 use App\Factory\QPVFactory;
 use App\Factory\RegionFactory;
@@ -148,18 +147,16 @@ class AppFixtures extends Fixture
 
         $entreprises_proxy = EntrepriseFactory::createMany(10);
 
-        GeocalisationFactory::createMany(100);
-
         QPVFactory::createOne([
-            'points' => '4.816716534414758 45.73214477619171, 4.813080546592355 45.74400463795999, 4.819462076239839 45.749804177101524, 4.828960166877956 45.7462313179966, 4.816716534414758 45.73214477619171'
+            'points' => '45.73214477619171 4.816716534414758, 45.74400463795999 4.813080546592355, 45.749804177101524 4.819462076239839, 45.7462313179966 4.828960166877956, 45.73214477619171 4.816716534414758'
         ]);
 
         QPVFactory::createOne([
-            'points' => '4.845381542401693 45.76157337233287, 4.846945894161872 45.75387585748982, 4.853573805853284 45.751664061596934, 4.852009454093105 45.76068304235505, 4.845381542401693 45.76157337233287'
+            'points' => '45.76157337233287 4.845381542401693, 45.75387585748982 4.846945894161872, 45.751664061596934 4.853573805853284, 45.76068304235505 4.852009454093105, 45.76157337233287 4.845381542401693'
         ]);
 
         QPVFactory::createOne([
-            'points' => '4.892211539586822 45.739202170596535, 4.9025589603428 45.73551268749595, 4.906720423038139 45.7472867810717, 4.897216542017703 45.75046536063158, 4.892211539586822 45.739202170596535'
+            'points' => '45.739202170596535 4.892211539586822, 45.73551268749595 4.9025589603428, 45.7472867810717 4.906720423038139, 45.75046536063158 4.897216542017703, 45.739202170596535 4.892211539586822'
         ]);
 
         AdresseFactory::createOne([
@@ -168,10 +165,8 @@ class AppFixtures extends Fixture
             'region' => RegionFactory::createOne([
                 'nom' => 'Rhône-Alpes'
             ]),
-            'geocalisation' => GeocalisationFactory::createOne([
-                'longitude' => 4.820755684763793,
-                'latitude' => 45.73746383873708
-            ])
+            'latitude' => 45.73746383873708,
+            'longitude' => 4.820755684763793,
         ]);
 
         AdresseFactory::createOne([
@@ -180,10 +175,8 @@ class AppFixtures extends Fixture
             'region' => RegionFactory::random([
                 'nom' => 'Rhône-Alpes'
             ]),
-            'geocalisation' => GeocalisationFactory::createOne([
-                'longitude' => 4.823165445560088,
-                'latitude' => 45.74077026415555
-            ])
+            'latitude' => 45.74077026415555,
+            'longitude' => 4.823165445560088,
         ]);
 
         AdresseFactory::createOne([
@@ -192,16 +185,13 @@ class AppFixtures extends Fixture
             'region' => RegionFactory::random([
                 'nom' => 'Rhône-Alpes'
             ]),
-            'geocalisation' => GeocalisationFactory::createOne([
-                'longitude' => 4.894672358032629,
-                'latitude' => 45.741748719265495,
-            ])
+            'latitude' => 45.741748719265495,
+            'longitude' => 4.894672358032629,
         ]);
 
         AdresseFactory::createMany(97, function () {
             return [
                 'region' => RegionFactory::randomOrCreate(),
-                'geocalisation' => GeocalisationFactory::random()
             ];
         });
 
