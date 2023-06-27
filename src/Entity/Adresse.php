@@ -30,6 +30,9 @@ class Adresse
     #[ORM\OneToMany(mappedBy: 'adresse', targetEntity: Utilisateur::class)]
     private Collection $utilisateurs;
 
+    #[ORM\ManyToOne(inversedBy: 'adresses')]
+    private ?QPV $QPV = null;
+
     public function __construct()
     {
         $this->utilisateurs = new ArrayCollection();
@@ -114,6 +117,18 @@ class Adresse
                 $utilisateur->setAdresse(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getQPV(): ?QPV
+    {
+        return $this->QPV;
+    }
+
+    public function setQPV(?QPV $QPV): static
+    {
+        $this->QPV = $QPV;
 
         return $this;
     }

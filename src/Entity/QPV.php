@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\QPVRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: QPVRepository::class)]
@@ -18,12 +19,15 @@ class QPV
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\ManyToMany(targetEntity: Geocalisation::class, mappedBy: 'QPV')]
-    private Collection $geocalisations;
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $points = null;
+
+    #[ORM\OneToMany(mappedBy: 'QPV', targetEntity: Adresse::class)]
+    private Collection $adresses;
 
     public function __construct()
     {
-        $this->geocalisations = new ArrayCollection();
+        $this->adresses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -43,28 +47,43 @@ class QPV
         return $this;
     }
 
-    /**
-     * @return Collection<int, Geocalisation>
-     */
-    public function getGeocalisations(): Collection
+    public function getPoints(): ?string
     {
-        return $this->geocalisations;
+        return $this->points;
     }
 
-    public function addGeocalisation(Geocalisation $geocalisation): static
+    public function setPoints(string $points): static
     {
-        if (!$this->geocalisations->contains($geocalisation)) {
-            $this->geocalisations->add($geocalisation);
-            $geocalisation->addQPV($this);
+        $this->points = $points;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Adresse>
+     */
+    public function getAdresses(): Collection
+    {
+        return $this->adresses;
+    }
+
+    public function addAdress(Adresse $adress): static
+    {
+        if (!$this->adresses->contains($adress)) {
+            $this->adresses->add($adress);
+            $adress->setQPV($this);
         }
 
         return $this;
     }
 
-    public function removeGeocalisation(Geocalisation $geocalisation): static
+    public function removeAdress(Adresse $adress): static
     {
-        if ($this->geocalisations->removeElement($geocalisation)) {
-            $geocalisation->removeQPV($this);
+        if ($this->adresses->removeElement($adress)) {
+            // set the owning side to null (unless already changed)
+            if ($adress->getQPV() === $this) {
+                $adress->setQPV(null);
+            }
         }
 
         return $this;

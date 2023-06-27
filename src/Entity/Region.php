@@ -19,11 +19,11 @@ class Region
     private ?string $nom = null;
 
     #[ORM\OneToMany(mappedBy: 'region', targetEntity: Adresse::class)]
-    private Collection $adresse;
+    private Collection $adresses;
 
     public function __construct()
     {
-        $this->adresse = new ArrayCollection();
+        $this->adresses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -46,15 +46,15 @@ class Region
     /**
      * @return Collection<int, Adresse>
      */
-    public function getAdresse(): Collection
+    public function getAdresses(): Collection
     {
-        return $this->adresse;
+        return $this->adresses;
     }
 
     public function addAdresse(Adresse $adresse): static
     {
-        if (!$this->adresse->contains($adresse)) {
-            $this->adresse->add($adresse);
+        if (!$this->adresses->contains($adresse)) {
+            $this->adresses->add($adresse);
             $adresse->setRegion($this);
         }
 
@@ -63,7 +63,7 @@ class Region
 
     public function removeAdresse(Adresse $adresse): static
     {
-        if ($this->adresse->removeElement($adresse)) {
+        if ($this->adresses->removeElement($adresse)) {
             // set the owning side to null (unless already changed)
             if ($adresse->getRegion() === $this) {
                 $adresse->setRegion(null);
