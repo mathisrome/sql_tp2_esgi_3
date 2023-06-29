@@ -191,7 +191,7 @@ class AppFixtures extends Fixture
 
         AdresseFactory::createMany(97, function () {
             return [
-                'region' => RegionFactory::randomOrCreate(),
+                'region' => RegionFactory::createOne(),
             ];
         });
 
